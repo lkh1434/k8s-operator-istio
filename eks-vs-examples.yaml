@@ -1,0 +1,483 @@
+---
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  labels:
+    app.kubernetes.io/managed-by: pulumi
+    vs-modifier-enable: "true"
+  name: cosmoshub-us-west-2-public-istio-ingress-virtual-service-lcd
+  namespace: cosmoshub
+spec:
+  gateways:
+  - istio-ingress/cosmoshub-us-west-2-public-istio-ingress-istio-ingress
+  hosts:
+  - lcd-cosmoshub.keplr.app
+  http:
+  - match:
+    - method:
+        regex: ^(OPTIONS|POST)$
+      uri:
+        exact: /txs
+    - uri:
+        regex: ^/blocks/(.)+$
+    - uri:
+        regex: ^/auth/accounts/(.)+$
+    - uri:
+        regex: ^/bank/balances/(.)+$
+    - uri:
+        exact: /gov/parameters/tallying
+    - uri:
+        exact: /gov/parameters/voting
+    - uri:
+        exact: /gov/parameters/deposit
+    - uri:
+        exact: /gov/proposals
+    - uri:
+        regex: ^/gov/proposals/(.)+/votes/(.)+$
+    - uri:
+        regex: ^/staking/delegators/(.)+/delegations$
+    - uri:
+        exact: /staking/parameters
+    - uri:
+        exact: /staking/pool
+    - uri:
+        regex: ^/distribution/delegators/(.)+/rewards$
+    - uri:
+        regex: ^/staking/delegators/(.)+/unbonding_delegations$
+    - uri:
+        exact: /staking/validators
+    - uri:
+        exact: /mint/params
+    - uri:
+        exact: /minting/inflation
+    - uri:
+        regex: ^/supply/total/(.)+$
+    - uri:
+        regex: ^/bank/total/(.)+$
+    - uri:
+        exact: /distribution/parameters
+    - method:
+        regex: ^(OPTIONS|POST)$
+      uri:
+        exact: /cosmos/tx/v1beta1/txs
+    - uri:
+        regex: ^/cosmos/tx/v1beta1/txs/(.)+$
+    - uri:
+        exact: /cosmos/tx/v1beta1/simulate
+    - uri:
+        exact: /cosmos/params/v1beta1/params
+    - uri:
+        exact: /cosmos/base/tendermint/v1beta1/node_info
+    - uri:
+        regex: ^/cosmos/auth/v1beta1/accounts/(.)+$
+    - uri:
+        regex: ^/cosmos/bank/v1beta1/balances/(.)+$
+    - uri:
+        exact: /cosmos/distribution/v1beta1/params
+    - uri:
+        exact: /cosmos/gov/v1beta1/params/tallying
+    - uri:
+        exact: /cosmos/gov/v1beta1/params/voting
+    - uri:
+        exact: /cosmos/gov/v1beta1/params/deposit
+    - uri:
+        exact: /cosmos/gov/v1beta1/proposals
+    - uri:
+        regex: ^/cosmos/gov/v1beta1/proposals/(.)+/votes/(.)+$
+    - uri:
+        regex: ^/cosmos/staking/v1beta1/delegations/(.)+$
+    - uri:
+        exact: /cosmos/staking/v1beta1/params
+    - uri:
+        exact: /cosmos/staking/v1beta1/pool
+    - uri:
+        regex: ^/cosmos/distribution/v1beta1/delegators/(.)+/rewards$
+    - uri:
+        regex: ^/cosmos/staking/v1beta1/delegators/(.)+/unbonding_delegations$
+    - uri:
+        exact: /cosmos/staking/v1beta1/validators
+    - uri:
+        exact: /cosmos/mint/v1beta1/inflation
+    - uri:
+        regex: ^/cosmos/bank/v1beta1/supply/(.)+$
+    - uri:
+        regex: ^/ibc/core/channel/v1beta1/channels/(.)+/ports/(.)+$
+    - uri:
+        regex: ^/ibc/core/channel/v1/channels/(.)+/ports/(.)+$
+    - uri:
+        regex: ^/ibc/core/channel/v1beta1/channels/(.)+/ports/(.)+/client_state$
+    - uri:
+        regex: ^/ibc/core/channel/v1/channels/(.)+/ports/(.)+/client_state$
+    - uri:
+        regex: ^/ibc/applications/transfer/v1beta1/denom_traces/(.)+$
+    - uri:
+        exact: /ibc/applications/transfer/v1beta1/params
+    - uri:
+        regex: ^/ibc/apps/transfer/v1/denom_traces/(.)+$
+    - uri:
+        exact: /ibc/apps/transfer/v1/params
+    - uri:
+        regex: ^/wasm/v1/contract/(.)+/smart/(.)+$
+    - uri:
+        regex: ^/cosmwasm/wasm/v1/contract/(.)+/smart/(.)+$
+    - uri:
+        regex: ^/wasm/contract/(.)+/code-hash$
+    - uri:
+        regex: ^/wasm/contract/(.)+/query/(.)+$
+    - uri:
+        exact: /osmosis/mint/v1beta1/epoch_provisions
+    - uri:
+        exact: /osmosis/epochs/v1beta1/epochs
+    - uri:
+        exact: /osmosis/mint/v1beta1/params
+    - uri:
+        regex: ^/osmosis/incentives/v1beta1/gauge_by_id/(.)+$
+    - uri:
+        regex: ^/osmosis/lockup/v1beta1/account_locked_longer_duration/(.)+$
+    - uri:
+        regex: ^/osmosis/lockup/v1beta1/account_locked_coins/(.)+$
+    - uri:
+        regex: ^/osmosis/lockup/v1beta1/account_unlocking_coins/(.)+$
+    - uri:
+        regex: ^/osmosis/lockup/v1beta1/synthetic_lockups_by_lock_id/(.)+$
+    - uri:
+        regex: ^/osmosis/gamm/v1beta1/pools/(.)+$
+    - uri:
+        exact: /osmosis/gamm/v1beta1/pools
+    - uri:
+        exact: /osmosis/pool-incentives/v1beta1/distr_info
+    - uri:
+        exact: /osmosis/pool-incentives/v1beta1/incentivized_pools
+    - uri:
+        exact: /osmosis/pool-incentives/v1beta1/lockable_durations
+    - uri:
+        exact: /osmosis/gamm/v1beta1/num_pools
+    - uri:
+        exact: /osmosis/superfluid/v1beta1/asset_multiplier
+    - uri:
+        regex: ^/osmosis/superfluid/v1beta1/superfluid_delegations/(.)+$
+    - uri:
+        exact: /osmosis/superfluid/v1beta1/params
+    - uri:
+        exact: /osmosis/superfluid/v1beta1/all_assets
+    - uri:
+        regex: ^/osmosis/superfluid/v1beta1/superfluid_undelegations_by_delegator/(.)+$
+    route:
+    - destination:
+        host: cosmoshub-us-west-2-public-istio-ingress-istio-service
+        port:
+          number: 1317
+  - match:
+    - uri:
+        regex: ^/gov/proposals/(.)+/tally$
+    route:
+    - destination:
+        host: cosmoshub-us-west-2-public-istio-ingress-istio-service
+        port:
+          number: 2317
+      headers:
+        request:
+          set:
+            XXX_PROXY_CACHE: "true"
+            XXX_PROXY_DURATION: 1h
+  - match:
+    - uri:
+        regex: ^/cosmos/gov/v1beta1/proposals/(.)+/tally$
+    route:
+    - destination:
+        host: cosmoshub-us-west-2-public-istio-ingress-istio-service
+        port:
+          number: 2317
+      headers:
+        request:
+          set:
+            XXX_PROXY_CACHE: "true"
+            XXX_PROXY_DURATION: 1h
+  - match:
+    - uri:
+        exact: /readiness
+    route:
+    - destination:
+        host: cosmoshub-us-west-2-public-istio-ingress-istio-service
+        port:
+          number: 9991
+---
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  annotations:
+    kubectl.kubernetes.io/last-applied-configuration: |
+      {"apiVersion":"networking.istio.io/v1alpha3","kind":"VirtualService","metadata":{"labels":{"app.kubernetes.io/managed-by":"pulumi"},"name":"cosmoshub-us-west-2-public-istio-ingress-virtual-service-rpc","namespace":"cosmoshub"},"spec":{"gateways":["istio-ingress/cosmoshub-us-west-2-public-istio-ingress-istio-ingress"],"hosts":["rpc-cosmoshub.keplr.app"],"http":[{"match":[{"uri":{"exact":"/status"}},{"uri":{"exact":"/websocket"}}],"route":[{"destination":{"host":"cosmoshub-us-west-2-public-istio-ingress-istio-service","port":{"number":26657}}}]},{"match":[{"uri":{"exact":"/readiness"}}],"route":[{"destination":{"host":"cosmoshub-us-west-2-public-istio-ingress-istio-service","port":{"number":9991}}}]}]}}
+  labels:
+    app.kubernetes.io/managed-by: pulumi
+    vs-modifier-enable: "true"
+  name: cosmoshub-us-west-2-public-istio-ingress-virtual-service-rpc
+  namespace: cosmoshub
+spec:
+  gateways:
+  - istio-ingress/cosmoshub-us-west-2-public-istio-ingress-istio-ingress
+  hosts:
+  - rpc-cosmoshub.keplr.app
+  http:
+  - match:
+    - uri:
+        exact: /status
+    - uri:
+        exact: /websocket
+    route:
+    - destination:
+        host: cosmoshub-us-west-2-public-istio-ingress-istio-service
+        port:
+          number: 26657
+  - match:
+    - uri:
+        exact: /readiness
+    route:
+    - destination:
+        host: cosmoshub-us-west-2-public-istio-ingress-istio-service
+        port:
+          number: 9991
+
+---
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  annotations:
+    kubectl.kubernetes.io/last-applied-configuration: |
+      {"apiVersion":"networking.istio.io/v1alpha3","kind":"VirtualService","metadata":{"labels":{"app.kubernetes.io/managed-by":"pulumi"},"name":"emoney-us-west-2-public-istio-ingress-virtual-service-lcd","namespace":"emoney"},"spec":{"gateways":["istio-ingress/emoney-us-west-2-public-istio-ingress-istio-ingress"],"hosts":["lcd-emoney-test.keplr.app"],"http":[{"match":[{"method":{"regex":"^(OPTIONS|POST)$"},"uri":{"exact":"/txs"}},{"uri":{"regex":"^/blocks/(.)+$"}},{"uri":{"regex":"^/auth/accounts/(.)+$"}},{"uri":{"regex":"^/bank/balances/(.)+$"}},{"uri":{"exact":"/gov/parameters/tallying"}},{"uri":{"exact":"/gov/parameters/voting"}},{"uri":{"exact":"/gov/parameters/deposit"}},{"uri":{"exact":"/gov/proposals"}},{"uri":{"regex":"^/gov/proposals/(.)+/votes/(.)+$"}},{"uri":{"regex":"^/staking/delegators/(.)+/delegations$"}},{"uri":{"exact":"/staking/parameters"}},{"uri":{"exact":"/staking/pool"}},{"uri":{"regex":"^/distribution/delegators/(.)+/rewards$"}},{"uri":{"regex":"^/staking/delegators/(.)+/unbonding_delegations$"}},{"uri":{"exact":"/staking/validators"}},{"uri":{"exact":"/mint/params"}},{"uri":{"exact":"/minting/inflation"}},{"uri":{"regex":"^/supply/total/(.)+$"}},{"uri":{"regex":"^/bank/total/(.)+$"}},{"uri":{"exact":"/distribution/parameters"}},{"method":{"regex":"^(OPTIONS|POST)$"},"uri":{"exact":"/cosmos/tx/v1beta1/txs"}},{"uri":{"regex":"^/cosmos/tx/v1beta1/txs/(.)+$"}},{"uri":{"exact":"/cosmos/tx/v1beta1/simulate"}},{"uri":{"exact":"/cosmos/params/v1beta1/params"}},{"uri":{"exact":"/cosmos/base/tendermint/v1beta1/node_info"}},{"uri":{"regex":"^/cosmos/auth/v1beta1/accounts/(.)+$"}},{"uri":{"regex":"^/cosmos/bank/v1beta1/balances/(.)+$"}},{"uri":{"exact":"/cosmos/distribution/v1beta1/params"}},{"uri":{"exact":"/cosmos/gov/v1beta1/params/tallying"}},{"uri":{"exact":"/cosmos/gov/v1beta1/params/voting"}},{"uri":{"exact":"/cosmos/gov/v1beta1/params/deposit"}},{"uri":{"exact":"/cosmos/gov/v1beta1/proposals"}},{"uri":{"regex":"^/cosmos/gov/v1beta1/proposals/(.)+/votes/(.)+$"}},{"uri":{"regex":"^/cosmos/staking/v1beta1/delegations/(.)+$"}},{"uri":{"exact":"/cosmos/staking/v1beta1/params"}},{"uri":{"exact":"/cosmos/staking/v1beta1/pool"}},{"uri":{"regex":"^/cosmos/distribution/v1beta1/delegators/(.)+/rewards$"}},{"uri":{"regex":"^/cosmos/staking/v1beta1/delegators/(.)+/unbonding_delegations$"}},{"uri":{"exact":"/cosmos/staking/v1beta1/validators"}},{"uri":{"exact":"/cosmos/mint/v1beta1/inflation"}},{"uri":{"regex":"^/cosmos/bank/v1beta1/supply/(.)+$"}},{"uri":{"regex":"^/ibc/core/channel/v1beta1/channels/(.)+/ports/(.)+$"}},{"uri":{"regex":"^/ibc/core/channel/v1/channels/(.)+/ports/(.)+$"}},{"uri":{"regex":"^/ibc/core/channel/v1beta1/channels/(.)+/ports/(.)+/client_state$"}},{"uri":{"regex":"^/ibc/core/channel/v1/channels/(.)+/ports/(.)+/client_state$"}},{"uri":{"regex":"^/ibc/applications/transfer/v1beta1/denom_traces/(.)+$"}},{"uri":{"exact":"/ibc/applications/transfer/v1beta1/params"}},{"uri":{"regex":"^/ibc/apps/transfer/v1/denom_traces/(.)+$"}},{"uri":{"exact":"/ibc/apps/transfer/v1/params"}},{"uri":{"regex":"^/wasm/v1/contract/(.)+/smart/(.)+$"}},{"uri":{"regex":"^/cosmwasm/wasm/v1/contract/(.)+/smart/(.)+$"}},{"uri":{"regex":"^/wasm/contract/(.)+/code-hash$"}},{"uri":{"regex":"^/wasm/contract/(.)+/query/(.)+$"}},{"uri":{"exact":"/osmosis/mint/v1beta1/epoch_provisions"}},{"uri":{"exact":"/osmosis/epochs/v1beta1/epochs"}},{"uri":{"exact":"/osmosis/mint/v1beta1/params"}},{"uri":{"regex":"^/osmosis/incentives/v1beta1/gauge_by_id/(.)+$"}},{"uri":{"regex":"^/osmosis/lockup/v1beta1/account_locked_longer_duration/(.)+$"}},{"uri":{"regex":"^/osmosis/lockup/v1beta1/account_locked_coins/(.)+$"}},{"uri":{"regex":"^/osmosis/lockup/v1beta1/account_unlocking_coins/(.)+$"}},{"uri":{"regex":"^/osmosis/lockup/v1beta1/synthetic_lockups_by_lock_id/(.)+$"}},{"uri":{"regex":"^/osmosis/gamm/v1beta1/pools/(.)+$"}},{"uri":{"exact":"/osmosis/gamm/v1beta1/pools"}},{"uri":{"exact":"/osmosis/pool-incentives/v1beta1/distr_info"}},{"uri":{"exact":"/osmosis/pool-incentives/v1beta1/incentivized_pools"}},{"uri":{"exact":"/osmosis/pool-incentives/v1beta1/lockable_durations"}},{"uri":{"exact":"/osmosis/gamm/v1beta1/num_pools"}},{"uri":{"exact":"/osmosis/superfluid/v1beta1/asset_multiplier"}},{"uri":{"regex":"^/osmosis/superfluid/v1beta1/superfluid_delegations/(.)+$"}},{"uri":{"exact":"/osmosis/superfluid/v1beta1/params"}},{"uri":{"exact":"/osmosis/superfluid/v1beta1/all_assets"}},{"uri":{"regex":"^/osmosis/superfluid/v1beta1/superfluid_undelegations_by_delegator/(.)+$"}}],"route":[{"destination":{"host":"emoney-us-west-2-public-istio-ingress-istio-service","port":{"number":1317}}}]},{"match":[{"uri":{"regex":"^/gov/proposals/(.)+/tally$"}}],"route":[{"destination":{"host":"emoney-us-west-2-public-istio-ingress-istio-service","port":{"number":2317}},"headers":{"request":{"set":{"XXX_PROXY_CACHE":"true","XXX_PROXY_DURATION":"1h"}}}}]},{"match":[{"uri":{"regex":"^/cosmos/gov/v1beta1/proposals/(.)+/tally$"}}],"route":[{"destination":{"host":"emoney-us-west-2-public-istio-ingress-istio-service","port":{"number":2317}},"headers":{"request":{"set":{"XXX_PROXY_CACHE":"true","XXX_PROXY_DURATION":"1h"}}}}]},{"match":[{"uri":{"exact":"/readiness"}}],"route":[{"destination":{"host":"emoney-us-west-2-public-istio-ingress-istio-service","port":{"number":9991}}}]}]}}
+  labels:
+    app.kubernetes.io/managed-by: pulumi
+    vs-modifier-enable: "true"
+  name: emoney-us-west-2-public-istio-ingress-virtual-service-lcd
+  namespace: emoney
+spec:
+  gateways:
+  - istio-ingress/emoney-us-west-2-public-istio-ingress-istio-ingress
+  hosts:
+  - lcd-emoney-test.keplr.app
+  http:
+  - match:
+    - method:
+        regex: ^(OPTIONS|POST)$
+      uri:
+        exact: /txs
+    - uri:
+        regex: ^/blocks/(.)+$
+    - uri:
+        regex: ^/auth/accounts/(.)+$
+    - uri:
+        regex: ^/bank/balances/(.)+$
+    - uri:
+        exact: /gov/parameters/tallying
+    - uri:
+        exact: /gov/parameters/voting
+    - uri:
+        exact: /gov/parameters/deposit
+    - uri:
+        exact: /gov/proposals
+    - uri:
+        regex: ^/gov/proposals/(.)+/votes/(.)+$
+    - uri:
+        regex: ^/staking/delegators/(.)+/delegations$
+    - uri:
+        exact: /staking/parameters
+    - uri:
+        exact: /staking/pool
+    - uri:
+        regex: ^/distribution/delegators/(.)+/rewards$
+    - uri:
+        regex: ^/staking/delegators/(.)+/unbonding_delegations$
+    - uri:
+        exact: /staking/validators
+    - uri:
+        exact: /mint/params
+    - uri:
+        exact: /minting/inflation
+    - uri:
+        regex: ^/supply/total/(.)+$
+    - uri:
+        regex: ^/bank/total/(.)+$
+    - uri:
+        exact: /distribution/parameters
+    - method:
+        regex: ^(OPTIONS|POST)$
+      uri:
+        exact: /cosmos/tx/v1beta1/txs
+    - uri:
+        regex: ^/cosmos/tx/v1beta1/txs/(.)+$
+    - uri:
+        exact: /cosmos/tx/v1beta1/simulate
+    - uri:
+        exact: /cosmos/params/v1beta1/params
+    - uri:
+        exact: /cosmos/base/tendermint/v1beta1/node_info
+    - uri:
+        regex: ^/cosmos/auth/v1beta1/accounts/(.)+$
+    - uri:
+        regex: ^/cosmos/bank/v1beta1/balances/(.)+$
+    - uri:
+        exact: /cosmos/distribution/v1beta1/params
+    - uri:
+        exact: /cosmos/gov/v1beta1/params/tallying
+    - uri:
+        exact: /cosmos/gov/v1beta1/params/voting
+    - uri:
+        exact: /cosmos/gov/v1beta1/params/deposit
+    - uri:
+        exact: /cosmos/gov/v1beta1/proposals
+    - uri:
+        regex: ^/cosmos/gov/v1beta1/proposals/(.)+/votes/(.)+$
+    - uri:
+        regex: ^/cosmos/staking/v1beta1/delegations/(.)+$
+    - uri:
+        exact: /cosmos/staking/v1beta1/params
+    - uri:
+        exact: /cosmos/staking/v1beta1/pool
+    - uri:
+        regex: ^/cosmos/distribution/v1beta1/delegators/(.)+/rewards$
+    - uri:
+        regex: ^/cosmos/staking/v1beta1/delegators/(.)+/unbonding_delegations$
+    - uri:
+        exact: /cosmos/staking/v1beta1/validators
+    - uri:
+        exact: /cosmos/mint/v1beta1/inflation
+    - uri:
+        regex: ^/cosmos/bank/v1beta1/supply/(.)+$
+    - uri:
+        regex: ^/ibc/core/channel/v1beta1/channels/(.)+/ports/(.)+$
+    - uri:
+        regex: ^/ibc/core/channel/v1/channels/(.)+/ports/(.)+$
+    - uri:
+        regex: ^/ibc/core/channel/v1beta1/channels/(.)+/ports/(.)+/client_state$
+    - uri:
+        regex: ^/ibc/core/channel/v1/channels/(.)+/ports/(.)+/client_state$
+    - uri:
+        regex: ^/ibc/applications/transfer/v1beta1/denom_traces/(.)+$
+    - uri:
+        exact: /ibc/applications/transfer/v1beta1/params
+    - uri:
+        regex: ^/ibc/apps/transfer/v1/denom_traces/(.)+$
+    - uri:
+        exact: /ibc/apps/transfer/v1/params
+    - uri:
+        regex: ^/wasm/v1/contract/(.)+/smart/(.)+$
+    - uri:
+        regex: ^/cosmwasm/wasm/v1/contract/(.)+/smart/(.)+$
+    - uri:
+        regex: ^/wasm/contract/(.)+/code-hash$
+    - uri:
+        regex: ^/wasm/contract/(.)+/query/(.)+$
+    - uri:
+        exact: /osmosis/mint/v1beta1/epoch_provisions
+    - uri:
+        exact: /osmosis/epochs/v1beta1/epochs
+    - uri:
+        exact: /osmosis/mint/v1beta1/params
+    - uri:
+        regex: ^/osmosis/incentives/v1beta1/gauge_by_id/(.)+$
+    - uri:
+        regex: ^/osmosis/lockup/v1beta1/account_locked_longer_duration/(.)+$
+    - uri:
+        regex: ^/osmosis/lockup/v1beta1/account_locked_coins/(.)+$
+    - uri:
+        regex: ^/osmosis/lockup/v1beta1/account_unlocking_coins/(.)+$
+    - uri:
+        regex: ^/osmosis/lockup/v1beta1/synthetic_lockups_by_lock_id/(.)+$
+    - uri:
+        regex: ^/osmosis/gamm/v1beta1/pools/(.)+$
+    - uri:
+        exact: /osmosis/gamm/v1beta1/pools
+    - uri:
+        exact: /osmosis/pool-incentives/v1beta1/distr_info
+    - uri:
+        exact: /osmosis/pool-incentives/v1beta1/incentivized_pools
+    - uri:
+        exact: /osmosis/pool-incentives/v1beta1/lockable_durations
+    - uri:
+        exact: /osmosis/gamm/v1beta1/num_pools
+    - uri:
+        exact: /osmosis/superfluid/v1beta1/asset_multiplier
+    - uri:
+        regex: ^/osmosis/superfluid/v1beta1/superfluid_delegations/(.)+$
+    - uri:
+        exact: /osmosis/superfluid/v1beta1/params
+    - uri:
+        exact: /osmosis/superfluid/v1beta1/all_assets
+    - uri:
+        regex: ^/osmosis/superfluid/v1beta1/superfluid_undelegations_by_delegator/(.)+$
+    route:
+    - destination:
+        host: emoney-us-west-2-public-istio-ingress-istio-service
+        port:
+          number: 1317
+  - match:
+    - uri:
+        regex: ^/gov/proposals/(.)+/tally$
+    route:
+    - destination:
+        host: emoney-us-west-2-public-istio-ingress-istio-service
+        port:
+          number: 2317
+      headers:
+        request:
+          set:
+            XXX_PROXY_CACHE: "true"
+            XXX_PROXY_DURATION: 1h
+  - match:
+    - uri:
+        regex: ^/cosmos/gov/v1beta1/proposals/(.)+/tally$
+    route:
+    - destination:
+        host: emoney-us-west-2-public-istio-ingress-istio-service
+        port:
+          number: 2317
+      headers:
+        request:
+          set:
+            XXX_PROXY_CACHE: "true"
+            XXX_PROXY_DURATION: 1h
+  - match:
+    - uri:
+        exact: /readiness
+    route:
+    - destination:
+        host: emoney-us-west-2-public-istio-ingress-istio-service
+        port:
+          number: 9991
+
+---
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  annotations:
+    kubectl.kubernetes.io/last-applied-configuration: |
+      {"apiVersion":"networking.istio.io/v1alpha3","kind":"VirtualService","metadata":{"labels":{"app.kubernetes.io/managed-by":"pulumi"},"name":"emoney-us-west-2-public-istio-ingress-virtual-service-rpc","namespace":"emoney"},"spec":{"gateways":["istio-ingress/emoney-us-west-2-public-istio-ingress-istio-ingress"],"hosts":["rpc-emoney-test.keplr.app"],"http":[{"match":[{"uri":{"exact":"/status"}},{"uri":{"exact":"/websocket"}}],"route":[{"destination":{"host":"emoney-us-west-2-public-istio-ingress-istio-service","port":{"number":26657}}}]},{"match":[{"uri":{"exact":"/readiness"}}],"route":[{"destination":{"host":"emoney-us-west-2-public-istio-ingress-istio-service","port":{"number":9991}}}]}]}}
+  labels:
+    app.kubernetes.io/managed-by: pulumi
+    vs-modifier-enable: "true"
+  name: emoney-us-west-2-public-istio-ingress-virtual-service-rpc
+  namespace: emoney
+spec:
+  gateways:
+  - istio-ingress/emoney-us-west-2-public-istio-ingress-istio-ingress
+  hosts:
+  - rpc-emoney-test.keplr.app
+  http:
+  - match:
+    - uri:
+        exact: /status
+    - uri:
+        exact: /websocket
+    route:
+    - destination:
+        host: emoney-us-west-2-public-istio-ingress-istio-service
+        port:
+          number: 26657
+  - match:
+    - uri:
+        exact: /readiness
+    route:
+    - destination:
+        host: emoney-us-west-2-public-istio-ingress-istio-service
+        port:
+          number: 9991

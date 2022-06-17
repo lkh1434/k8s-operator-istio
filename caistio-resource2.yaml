@@ -1,0 +1,9 @@
+apiVersion: operator.ca.com/v1alpha1
+kind: CAIstio
+metadata:
+  name: caistio-sample2
+spec:
+  chainid : cosmoshub
+  nodeservice : cosmoshub-node.svc.local
+  nodeserviceentry : google.com
+

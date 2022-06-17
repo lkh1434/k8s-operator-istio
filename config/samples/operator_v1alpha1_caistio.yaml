@@ -1,0 +1,6 @@
+apiVersion: operator.ca.com/v1alpha1
+kind: CAIstio
+metadata:
+  name: caistio-sample
+spec:
+  # TODO(user): Add fields here

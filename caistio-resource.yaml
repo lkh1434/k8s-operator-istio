@@ -1,0 +1,9 @@
+apiVersion: operator.ca.com/v1alpha1
+kind: CAIstio
+metadata:
+  name: caistio-sample
+spec:
+  chainid : gaga
+  nodeservice : gaga-node.gaga.svc.local
+  nodeserviceentry : extenal-gaga-node.com
+

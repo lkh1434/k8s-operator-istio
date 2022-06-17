@@ -1,0 +1,18 @@
+apiVersion: networking.istio.io/v1beta1
+kind: ServiceEntry
+metadata:
+  name: external-node
+  namespace: cosmoshub
+spec:
+  endpoints:
+  - address: naver.com
+    ports:
+      http: 80
+  hosts:
+  - cosmoshub-external-node.com
+  location: MESH_EXTERNAL
+  ports:
+  - name: http
+    number: 80
+    protocol: HTTP
+  resolution: DNS
