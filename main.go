@@ -69,7 +69,7 @@ func main() {
 		"Enable leader election for controller manager. "+
 			"Enabling this will ensure there is only one active controller manager.")
 	flag.DurationVar(&config.watchInterval, "interval", 15*time.Second, "Interval to modify.")
-	flag.DurationVar(&config.monitorInterval, "interval", 10*time.Second, "Interval to monitor.")
+	flag.DurationVar(&config.monitorInterval, "monitor-interval", 10*time.Second, "Interval to monitor.")
 
 	opts := zap.Options{
 		Development: true,

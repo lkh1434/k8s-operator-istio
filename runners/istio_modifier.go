@@ -158,8 +158,45 @@ func (w *istioModifier) changeDestination(ctx context.Context, chainID string, d
 	return nil
 }
 
-func (w *istioModifier) reconcile(ctx context.Context) error {
+func (w *istioModifier) updateCurrentDestinationStatus(ctx context.Context) error {
+	var cil operatorv1alpha1.CAIstioList
+	var vsl istionetworkingv1beta1.VirtualServiceList
 
+	err := w.client.List(ctx, &cil)
+	if err != nil {
+		w.log.Error(err, "Failed to get CAIstio List")
+		return err
+	}
+
+	for _, ci := range cil.Items {
+		opts := []client.ListOption{
+			client.InNamespace(ci.Spec.ChainID),
+			client.MatchingLabels{"vs-modifier-enable": "true"},
+		}
+		err = w.client.List(ctx, &vsl, opts...)
+
+		if err != nil {
+			w.log.Error(err, "Failed to get VirtualServices for "+ci.Spec.ChainID)
+		}
+
+		if len(vsl.Items) == 0 {
+			w.log.Info("Cannot fild VirtualService for " + ci.Spec.ChainID)
+		}
+
+		destination := vsl.Items[0].Spec.GetHttp()[0].GetRoute()[0].Destination.Host
+		ci.Status.Destination = destination
+
+		err = w.client.Status().Update(ctx, &ci)
+
+		if err != nil {
+			w.log.Error(err, "Failed to update status['destination'] of "+ci.Name)
+		}
+	}
+	return nil
+}
+
+func (w *istioModifier) reconcile(ctx context.Context) error {
+	w.updateCurrentDestinationStatus(ctx)
 	vsl, err := w.getVirtualServiceList(ctx)
 
 	if err != nil {
@@ -171,6 +208,7 @@ func (w *istioModifier) reconcile(ctx context.Context) error {
 	//   -> caistio 리소스의 chainID값을 namespace 값으로 가지고 있는 virtual service
 
 	caIstioInfoList, err := w.getCAIstioInfoList(ctx, vsl)
+
 	if err != nil {
 		w.log.Error(err, "getCAIstioInfoList failed")
 		return nil
